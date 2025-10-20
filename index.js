@@ -17,7 +17,7 @@ const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: 'Telagasari15',
-    database: 'biodata',
+    database: 'mahasiswa',
     port: 3307 //sesuaikan sama port mysql masing-masing
 })
 
@@ -30,8 +30,8 @@ db.connect((err) => {
     console.log('Connected succesfully.');
 })
 
-app.get('api/users', (req, res) => {
-   db.query('SELECT * FROM users', (err, results) => {
+app.get('/api/users', (req, res) => {
+   db.query('SELECT * FROM biodata', (err, results) => {
        if (err) {
            console.error('Error executing query: ' + err.stack);
            res.status(500).send('Error fetching users');
@@ -49,7 +49,7 @@ app.post('/api/users', (req, res) => {
     }
 
     db.query(
-        "INSERT INTO users (nama, nim, kelas) VALUES (?, ?, ?)", 
+        "INSERT INTO biodata (nama, nim, kelas) VALUES (?, ?, ?)", 
     [nama, nim, kelas], 
     (err, results) => {
         if (err) {
@@ -65,7 +65,7 @@ app.put('/api/users/:id', (req, res) => {
     const userId = req.params.id;
     const { nama, nim, kelas } = req.body;
     db.query(
-        "UPDATE mahasiswa SET nama = ?, nim = ?, kelas = ? WHERE id = ?",
+        "UPDATE biodata SET nama = ?, nim = ?, kelas = ? WHERE id = ?",
         [nama, nim, kelas, userId],
         (err, results) => {
             if (err) {
@@ -79,7 +79,7 @@ app.put('/api/users/:id', (req, res) => {
 
 app.delete('/api/users/:id', (req, res) => {
     const userId = req.params.id;
-    db.query('DELETE FROM users WHERE id = ?', [userId], (err, results) => {
+    db.query('DELETE FROM biodata WHERE id = ?', [userId], (err, results) => {
         if (err) {
             console.error(err);
             return res.status(500).json({message: "Database error"});
