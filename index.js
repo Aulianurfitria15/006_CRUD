@@ -56,7 +56,7 @@ app.post('/api/users', (req, res) => {
             console.error(err);
             return res.status(500).json({message: "Database error"});
         }
-        res.status(201).json({message: "Data berhasil ditambahkan"});
+        res.status(201).json({message: "User Created successfully"});
     }
     );
 });
